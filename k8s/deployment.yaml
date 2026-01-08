@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kapi-client
+  labels:
+    app: kapi-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kapi-client
+  template:
+    metadata:
+      labels:
+        app: kapi-client
+    spec:
+      containers:
+        - name: kapi-client
+          image: kapi-client:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: kapi-config
+            - secretRef:
+                name: kapi-credentials
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"

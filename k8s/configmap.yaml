@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kapi-config
+data:
+  KAPI_URL: "https://kapi3-mutu-hp-300.devops-hors-prod.caas.cagip.group.gca"
+  MONGO_URI: "mongodb://mongo-service:27017"
+  MONGO_DB: "kafka"
+  MONGO_COLLECTION: "clusters"
+  ALERT_THRESHOLD_DAYS: "7"

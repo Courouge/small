@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kapi-client
+  labels:
+    app: kapi-client
+spec:
+  selector:
+    matchLabels:
+      app: kapi-client
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 60s

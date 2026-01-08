@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kapi-sync
+spec:
+  schedule: "0 2 * * *"  # Every day at 2am
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: sync
+              image: curlimages/curl:latest
+              command:
+                - /bin/sh
+                - -c
+                - curl -X POST http://kapi-client/sync
+          restartPolicy: OnFailure
